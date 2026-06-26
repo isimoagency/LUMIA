@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMIA — Catálogo de Pantallas LED</title>
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white:   #ffffff;
+  --off:     #f5f5f7;
+  --off2:    #e8e8ed;
+  --ink:     #1d1d1f;
+  --ink2:    #424245;
+  --ink3:    #6e6e73;
+  --ink4:    #a1a1a6;
+  --blue:    #0071e3;
+  --blue-h:  #0077ed;
+  --line:    #d2d2d7;
+  --radius:  18px;
+  --r-sm:    12px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+               "Helvetica Neue", Arial, sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── NAV (Apple global nav exact) ─────────────────────────── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 48px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 22px;
+}
+
+.nav-logo {
+  font-size: 17px; font-weight: 600; letter-spacing: -.3px;
+  color: var(--ink); text-decoration: none;
+}
+
+.nav-links {
+  display: flex; gap: 28px; align-items: center;
+}
+
+.nav-links a {
+  font-size: 13px; color: var(--ink2); text-decoration: none;
+  letter-spacing: -.1px; transition: color .15s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  font-size: 13px; color: var(--blue); text-decoration: none;
+  letter-spacing: -.1px; transition: color .15s;
+}
+.nav-cta:hover { color: var(--blue-h); }
+
+/* ─── HERO ──────────────────────────────────────────────────── */
+#hero {
+  padding: 140px 0 80px;
+  text-align: center;
+  background: var(--white);
+}
+
+.hero-eyebrow {
+  font-size: 13px; font-weight: 600; letter-spacing: .5px;
+  text-transform: uppercase; color: var(--blue);
+  margin-bottom: 12px;
+}
+
+.hero-h1 {
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 700; letter-spacing: -2.5px; line-height: 1.05;
+  color: var(--ink); margin-bottom: 20px;
+}
+
+.hero-sub {
+  font-size: clamp(17px, 2vw, 21px);
+  font-weight: 400; color: var(--ink3);
+  letter-spacing: -.3px; line-height: 1.47;
+  max-width: 560px; margin: 0 auto 36px;
+}
+
+.hero-actions {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+}
+
+.btn-blue {
+  display: inline-block;
+  background: var(--blue); color: #fff;
+  font-size: 17px; font-weight: 400; letter-spacing: -.2px;
+  padding: 12px 24px; border-radius: 980px;
+  text-decoration: none; transition: background .15s;
+}
+.btn-blue:hover { background: var(--blue-h); }
+
+.btn-ghost {
+  display: inline-block;
+  color: var(--blue);
+  font-size: 17px; font-weight: 400; letter-spacing: -.2px;
+  padding: 12px 24px; border-radius: 980px;
+  text-decoration: none; border: 1px solid var(--blue);
+  transition: background .15s, color .15s;
+}
+.btn-ghost:hover { background: var(--blue); color: #fff; }
+
+/* ─── CATALOG SECTION HEADER ────────────────────────────────── */
+.section-header {
+  text-align: center;
+  padding: 80px 22px 48px;
+  border-top: 1px solid var(--line);
+}
+
+.section-header h2 {
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 700; letter-spacing: -1.2px; color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.section-header p {
+  font-size: 17px; color: var(--ink3); letter-spacing: -.2px; line-height: 1.5;
+}
+
+/* ─── PRODUCT CARD ──────────────────────────────────────────── */
+.product {
+  max-width: 1200px; margin: 0 auto 96px;
+  padding: 0 22px;
+}
+
+/* Product hero block — fullbleed carousel + specs side by side on wide */
+.product-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--off);
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 520px;
+}
+
+@media (max-width: 860px) {
+  .product-hero { grid-template-columns: 1fr; }
+}
+
+/* ─── CAROUSEL ──────────────────────────────────────────────── */
+.carousel-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--off);
+  min-height: 420px;
+  display: flex; flex-direction: column;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform .42s cubic-bezier(.25,.46,.45,.94);
+  flex: 1;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 32px;
+}
+
+.carousel-slide img {
+  width: 100%; max-height: 400px;
+  object-fit: contain;
+  border-radius: 10px;
+  /* images may take a moment to load */
+  background: var(--off2);
+  min-height: 200px;
+}
+
+/* Thumb strip */
+.thumb-strip {
+  display: flex; gap: 6px; justify-content: center;
+  padding: 12px 16px 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.thumb-strip::-webkit-scrollbar { display: none; }
+
+.thumb {
+  width: 44px; height: 44px; flex-shrink: 0;
+  border-radius: 8px; overflow: hidden; cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color .15s, opacity .15s;
+  opacity: .55;
+  background: var(--off2);
+}
+.thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.thumb.active {
+  border-color: var(--ink);
+  opacity: 1;
+}
+
+/* Nav arrows */
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,.85);
+  border: none; border-radius: 50%;
+  cursor: pointer; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  transition: background .15s, transform .15s;
+  backdrop-filter: blur(8px);
+}
+.carousel-btn:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
+.carousel-btn svg { width: 16px; height: 16px; color: var(--ink); }
+.carousel-btn.prev { left: 12px; }
+.carousel-btn.next { right: 12px; }
+
+/* dot counter */
+.carousel-count {
+  position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; color: var(--ink3);
+  background: rgba(255,255,255,.7); padding: 2px 8px; border-radius: 10px;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+/* ─── PRODUCT INFO PANEL ────────────────────────────────────── */
+.product-info {
+  padding: 48px 40px;
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--white);
+}
+
+@media (max-width: 860px) {
+  .product-info { padding: 32px 24px; }
+}
+
+.product-badge {
+  display: inline-block;
+  font-size: 11px; font-weight: 600; letter-spacing: .8px;
+  text-transform: uppercase; color: var(--ink3);
+  margin-bottom: 10px;
+}
+
+.product-name {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700; letter-spacing: -1px; line-height: 1.1;
+  color: var(--ink); margin-bottom: 8px;
+}
+
+.product-tagline {
+  font-size: 15px; color: var(--ink3);
+  letter-spacing: -.1px; line-height: 1.5; margin-bottom: 28px;
+}
+
+/* Spec table */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 28px;
+}
+
+.spec-table tr {
+  border-top: 1px solid var(--line);
+}
+.spec-table tr:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.spec-table td {
+  padding: 9px 0;
+  font-size: 13px;
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+.spec-table .spec-key {
+  color: var(--ink3);
+  width: 42%;
+  padding-right: 12px;
+}
+
+.spec-table .spec-val {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* highlight chips */
+.spec-chips {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
+}
+.chip {
+  font-size: 12px; font-weight: 500;
+  background: var(--off); color: var(--ink2);
+  padding: 5px 12px; border-radius: 980px;
+  letter-spacing: -.1px;
+  border: 1px solid var(--line);
+}
+.chip.highlight { background: #e8f0fe; color: #1a5cb0; border-color: #c2d4f8; }
+
+.product-cta {
+  display: inline-block;
+  font-size: 15px; color: var(--blue);
+  text-decoration: none; letter-spacing: -.1px;
+  transition: color .15s;
+}
+.product-cta::after { content: " →"; }
+.product-cta:hover { color: var(--blue-h); }
+
+/* ─── FULL SPEC ACCORDION ───────────────────────────────────── */
+.spec-accordion {
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.spec-accordion-btn {
+  width: 100%; background: none; border: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 0;
+  font-size: 14px; font-weight: 600; color: var(--ink);
+  letter-spacing: -.1px;
+}
+
+.spec-accordion-btn svg {
+  width: 20px; height: 20px; color: var(--ink3);
+  transition: transform .25s;
+}
+
+.spec-accordion-btn.open svg { transform: rotate(180deg); }
+
+.spec-accordion-body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .35s ease;
+}
+
+.spec-accordion-body.open { max-height: 600px; }
+
+/* ─── INDEX GRID ─────────────────────────────────────────────── */
+#catalogo {
+  background: var(--white);
+}
+
+.catalog-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px; padding: 0 22px 64px;
+}
+
+.cat-card {
+  background: var(--off);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none; color: inherit;
+  transition: transform .2s, box-shadow .2s;
+  display: block;
+}
+.cat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.1);
+}
+
+.cat-card-img {
+  width: 100%; aspect-ratio: 4/3;
+  object-fit: contain;
+  background: var(--off2);
+  padding: 20px;
+}
+
+.cat-card-body {
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--line);
+}
+
+.cat-card-label { font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--ink4); margin-bottom: 4px; }
+.cat-card-name  { font-size: 17px; font-weight: 600; letter-spacing: -.3px; color: var(--ink); margin-bottom: 4px; }
+.cat-card-desc  { font-size: 13px; color: var(--ink3); line-height: 1.45; margin-bottom: 12px; }
+.cat-card-link  { font-size: 13px; color: var(--blue); }
+
+/* ─── COMPARE TABLE ─────────────────────────────────────────── */
+#compare {
+  background: var(--off);
+  padding: 80px 0;
+}
+
+.compare-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 22px;
+  overflow-x: auto;
+}
+
+.compare-table {
+  width: 100%; min-width: 700px;
+  border-collapse: collapse;
+}
+
+.compare-table th {
+  font-size: 13px; font-weight: 600; letter-spacing: -.1px;
+  color: var(--ink); padding: 14px 16px;
+  background: var(--off2); text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.compare-table th:first-child { border-radius: var(--r-sm) 0 0 0; }
+.compare-table th:last-child  { border-radius: 0 var(--r-sm) 0 0; }
+
+.compare-table td {
+  padding: 11px 16px;
+  font-size: 13px; color: var(--ink2);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top; line-height: 1.4;
+}
+
+.compare-table tr:last-child td { border-bottom: none; }
+
+.compare-table td:first-child {
+  font-weight: 600; color: var(--ink);
+}
+
+.badge-in  { background: #e8f5e9; color: #2e7d32; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
+.badge-out { background: #e3f2fd; color: #1565c0; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
+
+/* ─── CTA STRIP ─────────────────────────────────────────────── */
+#cta {
+  background: var(--ink);
+  padding: 80px 22px;
+  text-align: center;
+  color: var(--white);
+}
+
+#cta h2 {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700; letter-spacing: -1.5px; margin-bottom: 16px;
+}
+
+#cta p {
+  font-size: 17px; color: var(--ink4); max-width: 500px; margin: 0 auto 36px; line-height: 1.5;
+}
+
+.btn-white {
+  display: inline-block;
+  background: var(--white); color: var(--ink);
+  font-size: 17px; font-weight: 500;
+  padding: 12px 24px; border-radius: 980px; text-decoration: none;
+  transition: opacity .15s;
+}
+.btn-white:hover { opacity: .88; }
+
+.btn-ghost-w {
+  display: inline-block;
+  color: var(--white);
+  font-size: 17px; font-weight: 400;
+  padding: 12px 24px; border-radius: 980px; text-decoration: none;
+  border: 1px solid rgba(255,255,255,.35);
+  transition: background .15s;
+}
+.btn-ghost-w:hover { background: rgba(255,255,255,.1); }
+
+.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ─── FOOTER ────────────────────────────────────────────────── */
+footer {
+  background: var(--off);
+  border-top: 1px solid var(--line);
+  padding: 32px 22px;
+  text-align: center;
+}
+
+footer p { font-size: 12px; color: var(--ink3); line-height: 1.8; }
+footer a  { color: var(--ink3); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ─── PRODUCT ANCHOR ────────────────────────────────────────── */
+.product-anchor {
+  display: block; visibility: hidden;
+  margin-top: -80px; padding-top: 80px;
+}
+
+/* ─── STICKY PRODUCT MINI-NAV ───────────────────────────────── */
+#product-nav {
+  position: sticky; top: 48px; z-index: 900;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  padding: 0 22px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+}
+#product-nav::-webkit-scrollbar { display: none; }
+
+.pnav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; gap: 0;
+}
+
+.pnav-link {
+  display: inline-block;
+  font-size: 13px; color: var(--ink3);
+  padding: 13px 18px;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+  letter-spacing: -.1px;
+  white-space: nowrap;
+}
+.pnav-link:hover, .pnav-link.active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .pnav-link { padding: 12px 12px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ──────────────────────────────────────────────────── -->
+<nav id="nav">
+  <a class="nav-logo" href="#">LUMIA <span style="font-size:10px;font-weight:400;color:var(--ink3);letter-spacing:.3px;">by ISIMO</span></a>
+  <div class="nav-links">
+    <a href="#indoor">Indoor</a>
+    <a href="#outdoor">Outdoor</a>
+    <a href="#compare">Comparar</a>
+    <a href="#cta">Contacto</a>
+  </div>
+  <a class="nav-cta" href="https://wa.me/5491100000000" target="_blank">Cotizar →</a>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────────────────── -->
+<section id="hero">
+  <p class="hero-eyebrow">ISIMO Company · Catálogo Técnico 2025</p>
+  <h1 class="hero-h1">Pantallas LED<br>de fábrica.</h1>
+  <p class="hero-sub">Indoor, outdoor, curvas y flex. Tecnología A1 / A2 con aluminio die-cast, brillo ≥ 4000 nits y conectividad universal.</p>
+  <div class="hero-actions">
+    <a href="#catalogo" class="btn-blue">Ver catálogo</a>
+    <a href="#compare" class="btn-ghost">Comparar modelos</a>
+  </div>
+</section>
+
+<!-- ─── PRODUCT NAV ───────────────────────────────────────────── -->
+<div id="product-nav">
+  <div class="pnav-inner">
+    <a class="pnav-link" href="#indoor-plus">A1 Plus Indoor</a>
+    <a class="pnav-link" href="#outdoor-plus">A1 Plus Outdoor</a>
+    <a class="pnav-link" href="#a2-outdoor">A2 Plus Outdoor</a>
+    <a class="pnav-link" href="#flex">A2 Flex 45°</a>
+    <a class="pnav-link" href="#curve-10">A2 Curve 10°</a>
+    <a class="pnav-link" href="#a1-curve">A1 Plus Curve</a>
+  </div>
+</div>
+
+<!-- ─── CATALOG INDEX CARDS ─────────────────────────────────── -->
+<div id="catalogo">
+  <div class="section-header">
+    <h2>Toda la línea</h2>
+    <p>Seis modelos para cualquier evento o instalación.</p>
+  </div>
+
+  <div class="catalog-grid">
+    <a class="cat-card" href="#indoor-plus">
+      <img class="cat-card-img" src="https://drive.google.com/thumbnail?id=1XzLpkcIPvnxDehjrVjmpy3WbJ0E2aXWA&sz=w800" alt="A1 Plus Indoor" loading="lazy">
+      <div class="cat-card-body">
+        <div class="cat-card-label">Indoor</div>
+        <div class="cat-card-name">A1 Plus Indoor</div>
+        <div class="cat-card-desc">P1.56 – P2.97 · ≤800 nits · IP45</div>
+        <div class="cat-card-link">Ver detalles</div>
+      </div>
+    </a>
+    <a class="cat-card" href="#outdoor-plus">
+      <img class="cat-card-img" src="https://drive.google.com/thumbnail?id=1p1Ix75kmWb74i8KjZuekTjaVVEiTCOQC&sz=w800" alt="A1 Plus Outdoor" loading="lazy">
+      <div class="cat-card-body">
+        <div class="cat-card-label">Outdoor</div>
+        <div class="cat-card-name">A1 Plus Outdoor</div>
+        <div class="cat-card-desc">P2.60 – P3.91 · ≥4000 nits · IP65</div>
+        <div class="cat-card-link">Ver detalles</div>
+      </div>
+    </a>
+    <a class="cat-card" href="#a2-outdoor">
+      <img class="cat-card-img" src="https://drive.google.com/thumbnail?id=1VPJ6uHxWYs2zu2mTaUMY7_O_L6hKfBrC&sz=w800" alt="A2 Plus Outdoor" loading="lazy">
+      <div class="cat-card-body">
+        <div class="cat-card-label">Outdoor</div>
+        <div class="cat-card-name">A2 Plus Outdoor</div>
+        <div class="cat-card-desc">P2.97 – P3.91 · ≥4000 nits · IP65</div>
+        <div class="cat-card-link">Ver detalles</div>
+      </div>
+    </a>
+    <a class="cat-card" href="#flex">
+      <img class="cat-card-img" src="https://drive.google.com/thumbnail?id=1vW_CzlQAcVhtDPbs7W5M1y94nx45wdam&sz=w800" alt="A2 Flex" loading="lazy">
+      <div class="cat-card-body">
+        <div class="cat-card-label">Flex · 45° Outdoor</div>
+        <div class="cat-card-name">A2 Model Flex</div>
+        <div class="cat-card-desc">P2.97 – P3.91 · Ángulo 45° · IP65</div>
+        <div class="cat-card-link">Ver detalles</div>
+      </div>
+    </a>
+    <a class="cat-card" href="#curve-10">
+      <img class="cat-card-img" src="https://drive.google.com/thumbnail?id=1qwknprRw_dnHKLyJZN3PZe-NoMniJJjG&sz=w800" alt="A2 Curve" loading="lazy">
+      <div class="cat-card-body">
+        <div class="cat-card-label">Curve · 10°</div>
+        <div class="cat-card-name">A2 Model Curve</div>
+        <div class="cat-card-desc">P2.97 – P3.91 · Curvado 10° · IP65</div>
+        <div class="cat-card-link">Ver detalles</div>
+      </div>
+    </a>
+    <a class="cat-card" href="#a1-curve">
+      <img class="cat-card-img" src="https://drive.google.com/thumbnail?id=1dC1q48YZTHHExGL0vpC_devlrK8G0JSq&sz=w800" alt="A1 Plus Curve" loading="lazy">
+      <div class="cat-card-body">
+        <div class="cat-card-label">Curve · 10° Outdoor</div>
+        <div class="cat-card-name">A1 Plus Curve</div>
+        <div class="cat-card-desc">P2.97 – P3.91 · Curvado 10° · IP65</div>
+        <div class="cat-card-link">Ver detalles</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ─── PRODUCTS ──────────────────────────────────────────────── -->
+
+<!-- ══ A1 PLUS INDOOR ══ -->
+<span id="indoor-plus" class="product-anchor"></span>
+<div class="section-header" id="indoor">
+  <h2>Indoor</h2>
+  <p>Alta resolución para interiores. Desde 1.56 mm de pixel pitch.</p>
+</div>
+
+<div class="product">
+  <div class="product-hero">
+    <div class="carousel-wrap" data-ids='["1XzLpkcIPvnxDehjrVjmpy3WbJ0E2aXWA","16uFVbmkxqssRFzabwK3wzRDQFozvNgRB","1lnO950yxFKTUm-hAwNN8Q5rXrogCRjDw","1l0wwvsqxToL_Rc8ADP5moPREQVyU2N0y","1cPefyqUq6t6Y1cTBFerGRpzCPzK0RfKb","1l8FFnloysPz8cXTivS6OEQhhsJcLN-gF"]'>
+    </div>
+    <div class="product-info">
+      <span class="product-badge">Indoor · Die-cast Aluminum</span>
+      <h2 class="product-name">A1 Plus Indoor</h2>
+      <p class="product-tagline">Resolución ultra-fina para conferencias, escenarios y instalaciones de interior. Cuatro pixel pitches, una sola plataforma de gabinete.</p>
+      <div class="spec-chips">
+        <span class="chip highlight">P1.56 – P2.97</span>
+        <span class="chip">≤800 nits</span>
+        <span class="chip">IP45</span>
+        <span class="chip">16-bit Gray Scale</span>
+        <span class="chip">HDMI · SDI</span>
+      </div>
+      <table class="spec-table">
+        <tr><td class="spec-key">Pixel Pitch</td><td class="spec-val">1.56 / 1.95 / 2.604 / 2.976 mm</td></tr>
+        <tr><td class="spec-key">LED Lamp</td><td class="spec-val">SMD1212 / SMD1515 / SMD2020</td></tr>
+        <tr><td class="spec-key">Densidad</td><td class="spec-val">409.600 – 112.896 dots/m²</td></tr>
+        <tr><td class="spec-key">Brillo</td><td class="spec-val">≤ 800 nits</td></tr>
+        <tr><td class="spec-key">Gabinete</td><td class="spec-val">500 × 500 × 85 mm · 7.5 kg</td></tr>
+        <tr><td class="spec-key">Módulo</td><td class="spec-val">250 × 250 mm · 0.5 kg</td></tr>
+        <tr><td class="spec-key">Potencia máx.</td><td class="spec-val">600 W/m²  (media: 360 W/m²)</td></tr>
+        <tr><td class="spec-key">Ángulo visual</td><td class="spec-val">H140° / V140°</td></tr>
+        <tr><td class="spec-key">Temperatura op.</td><td class="spec-val">-20 °C a +65 °C</td></tr>
+        <tr><td class="spec-key">Conectividad</td><td class="spec-val">AV · VGA · DVI · HDMI · SDI</td></tr>
+      </table>
+      <a class="product-cta" href="https://wa.me/5491100000000?text=Consulta%20A1%20Plus%20Indoor" target="_blank">Consultar disponibilidad</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ A1 PLUS OUTDOOR ══ -->
+<span id="outdoor-plus" class="product-anchor"></span>
+<div class="section-header" id="outdoor">
+  <h2>Outdoor</h2>
+  <p>≥ 4000 nits. Visibles a plena luz del día. Certificación IP65.</p>
+</div>
+
+<div class="product">
+  <div class="product-hero" style="direction:rtl">
+    <div class="carousel-wrap" style="direction:ltr" data-ids='["1p1Ix75kmWb74i8KjZuekTjaVVEiTCOQC","1lk1_SglI0RUP-b6OmiYCnnxCl3ZV23Vz","13TZkxeUqDUM3agQUGVui9X3opcLCk2_3","1JGyf5ev_21TO7e_-ShXmBzcQel_-uaw6"]'>
+    </div>
+    <div class="product-info" style="direction:ltr">
+      <span class="product-badge">Outdoor · IP65 · SMD1415/1921</span>
+      <h2 class="product-name">A1 Plus Outdoor</h2>
+      <p class="product-tagline">Legible a plena luz del sol. Estructura die-cast de aluminio resistente a lluvia y polvo. Tres pixel pitches para cubrir corta y larga distancia.</p>
+      <div class="spec-chips">
+        <span class="chip highlight">P2.60 – P3.91</span>
+        <span class="chip">≥4000 nits</span>
+        <span class="chip">IP65</span>
+        <span class="chip">16-bit Gray Scale</span>
+        <span class="chip">HDMI · SDI</span>
+      </div>
+      <table class="spec-table">
+        <tr><td class="spec-key">Pixel Pitch</td><td class="spec-val">2.604 / 2.976 / 3.91 mm</td></tr>
+        <tr><td class="spec-key">LED Lamp</td><td class="spec-val">SMD1415 / SMD1921</td></tr>
+        <tr><td class="spec-key">Densidad</td><td class="spec-val">147.456 – 65.536 dots/m²</td></tr>
+        <tr><td class="spec-key">Brillo</td><td class="spec-val">≥ 4.000 nits</td></tr>
+        <tr><td class="spec-key">IP Rating</td><td class="spec-val">IP65</td></tr>
+        <tr><td class="spec-key">Gabinete</td><td class="spec-val">500 × 500 × 85 mm · 8 kg</td></tr>
+        <tr><td class="spec-key">Potencia máx.</td><td class="spec-val">750 W/m²  (media: 450 W/m²)</td></tr>
+        <tr><td class="spec-key">Ángulo visual</td><td class="spec-val">H140° / V140°</td></tr>
+        <tr><td class="spec-key">Temperatura op.</td><td class="spec-val">-20 °C a +65 °C</td></tr>
+        <tr><td class="spec-key">Control</td><td class="spec-val">Synchronous / Asynchronous</td></tr>
+      </table>
+      <a class="product-cta" href="https://wa.me/5491100000000?text=Consulta%20A1%20Plus%20Outdoor" target="_blank">Consultar disponibilidad</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ A2 PLUS OUTDOOR ══ -->
+<span id="a2-outdoor" class="product-anchor"></span>
+<div class="product">
+  <div class="product-hero">
+    <div class="carousel-wrap" data-ids='["1VPJ6uHxWYs2zu2mTaUMY7_O_L6hKfBrC","1qwknprRw_dnHKLyJZN3PZe-NoMniJJjG","1t7y3soYBE4oDR2sLQTw3gO3YiIaoiI1Q","1F7A-QksPS_dqJXDqZB96rut3aDs6SkwA","1DZsaV_R7cfAswPzcIDLGESz0A-CMOIXA","1VOMzqobAoblrFm7l1-kqy8qUe4dORP2C","1GDX7w3_WSk7iyt44LOyM_G95baIFSqHu","1J9FcTkgo5kaCxiO2SKMj_IqCxb5J99ds","1DGJuB3ZGVwUayYxUqJk_Y-MCuMuw4SlE","1FJ50FOHj5bSZC6f8IbAmpOtTt0S6Kw3v","11CqS9gH7rW3pVzcJvFNalHYHU8DelSUp","1LuIlzzSMzyPWphS1ORyt0Nya2gsOl4fl"]'>
+    </div>
+    <div class="product-info">
+      <span class="product-badge">Outdoor · Plataforma A2</span>
+      <h2 class="product-name">A2 Plus Outdoor</h2>
+      <p class="product-tagline">Plataforma A2 en formato estándar outdoor. Gabinetes intercambiables compatibles con la línea Flex y Curve, ideal para instalaciones modulares de gran escala.</p>
+      <div class="spec-chips">
+        <span class="chip highlight">P2.97 – P3.91</span>
+        <span class="chip">≥4000 nits</span>
+        <span class="chip">IP65</span>
+        <span class="chip">21/16 scan</span>
+      </div>
+      <table class="spec-table">
+        <tr><td class="spec-key">Pixel Pitch</td><td class="spec-val">2.976 / 3.91 mm</td></tr>
+        <tr><td class="spec-key">LED Lamp</td><td class="spec-val">SMD1415 / SMD1921</td></tr>
+        <tr><td class="spec-key">Densidad</td><td class="spec-val">112.896 / 65.536 dots/m²</td></tr>
+        <tr><td class="spec-key">Brillo</td><td class="spec-val">≥ 4.000 nits</td></tr>
+        <tr><td class="spec-key">IP Rating</td><td class="spec-val">IP65</td></tr>
+        <tr><td class="spec-key">Gabinete</td><td class="spec-val">500 × 500 × 85 mm · 8 kg</td></tr>
+        <tr><td class="spec-key">Módulo</td><td class="spec-val">250 × 250 mm · 0.5 kg</td></tr>
+        <tr><td class="spec-key">Potencia máx.</td><td class="spec-val">750 W/m²  (media: 450 W/m²)</td></tr>
+        <tr><td class="spec-key">Ángulo visual</td><td class="spec-val">H140° / V140°</td></tr>
+        <tr><td class="spec-key">Temperatura op.</td><td class="spec-val">-20 °C a +65 °C</td></tr>
+      </table>
+      <a class="product-cta" href="https://wa.me/5491100000000?text=Consulta%20A2%20Plus%20Outdoor" target="_blank">Consultar disponibilidad</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ A2 FLEX ══ -->
+<span id="flex" class="product-anchor"></span>
+<div class="section-header">
+  <h2>Flex & Curve</h2>
+  <p>Arquitectura LED adaptada a estructuras anguladas y circulares.</p>
+</div>
+
+<div class="product">
+  <div class="product-hero" style="direction:rtl">
+    <div class="carousel-wrap" style="direction:ltr" data-ids='["1vW_CzlQAcVhtDPbs7W5M1y94nx45wdam","1r9h6vF6N5BxHvODPYDG7e0qmPtAzQpcz","1DylIspT2WdbNMp1AcN74RgRhR3A7UFsM","1-ZH4Cpg425oNNmK0XjX5x1xpnlv-1d9U","1hmRUnWqP2va79vefy7TRItNCJ_f8ek-O","17PC2gVosIa-SS0_s2BHyhyf4o0iWdlSA","1n5qJdHs6uPWv9-4JsX22c4f988L0aHVR","1sM9eLg_a0Zuw2c6wbmJ9VN31fTbkrv6J","1qQRVqqyytczBRDeterxT2MFjHoIxFjlc","1QzAEDBVZnb1D8vBegEFZc0OIuy9XqKeM"]'>
+    </div>
+    <div class="product-info" style="direction:ltr">
+      <span class="product-badge">Flex · 45° · Outdoor</span>
+      <h2 class="product-name">A2 Model Flex</h2>
+      <p class="product-tagline">Gabinetes con articulación a 45°. Permite crear pantallas anguladas, esquinas convexas o estructuras poligonales sin cortes de imagen.</p>
+      <div class="spec-chips">
+        <span class="chip highlight">45° Angular</span>
+        <span class="chip">P2.97 – P3.91</span>
+        <span class="chip">≥4000 nits</span>
+        <span class="chip">IP65</span>
+      </div>
+      <table class="spec-table">
+        <tr><td class="spec-key">Configuración</td><td class="spec-val">Flex 45° outdoor</td></tr>
+        <tr><td class="spec-key">Pixel Pitch</td><td class="spec-val">2.976 / 3.91 mm</td></tr>
+        <tr><td class="spec-key">Densidad</td><td class="spec-val">112.896 / 65.536 dots/m²</td></tr>
+        <tr><td class="spec-key">Brillo</td><td class="spec-val">≥ 4.000 nits</td></tr>
+        <tr><td class="spec-key">IP Rating</td><td class="spec-val">IP65</td></tr>
+        <tr><td class="spec-key">Gabinete</td><td class="spec-val">500 × 500 × 85 mm · 8 kg</td></tr>
+        <tr><td class="spec-key">Potencia máx.</td><td class="spec-val">750 W/m²</td></tr>
+        <tr><td class="spec-key">Ángulo visual</td><td class="spec-val">H140° / V140°</td></tr>
+        <tr><td class="spec-key">Temperatura op.</td><td class="spec-val">-20 °C a +65 °C</td></tr>
+      </table>
+      <a class="product-cta" href="https://wa.me/5491100000000?text=Consulta%20A2%20Flex" target="_blank">Consultar disponibilidad</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ A2 CURVE 10° ══ -->
+<span id="curve-10" class="product-anchor"></span>
+<div class="product">
+  <div class="product-hero">
+    <div class="carousel-wrap" data-ids='["1VPJ6uHxWYs2zu2mTaUMY7_O_L6hKfBrC","1qwknprRw_dnHKLyJZN3PZe-NoMniJJjG","1t7y3soYBE4oDR2sLQTw3gO3YiIaoiI1Q","1F7A-QksPS_dqJXDqZB96rut3aDs6SkwA","1DZsaV_R7cfAswPzcIDLGESz0A-CMOIXA","1VOMzqobAoblrFm7l1-kqy8qUe4dORP2C"]'>
+    </div>
+    <div class="product-info">
+      <span class="product-badge">Curve · 10° · Plataforma A2</span>
+      <h2 class="product-name">A2 Model Curve</h2>
+      <p class="product-tagline">Curvado continuo de 10° entre gabinetes. Ideal para pantallas circulares, semicírculos de escenario y formatos panorámicos.</p>
+      <div class="spec-chips">
+        <span class="chip highlight">10° Curve</span>
+        <span class="chip">P2.97 – P3.91</span>
+        <span class="chip">≥4000 nits</span>
+        <span class="chip">IP65</span>
+      </div>
+      <table class="spec-table">
+        <tr><td class="spec-key">Configuración</td><td class="spec-val">Curve 10°</td></tr>
+        <tr><td class="spec-key">Pixel Pitch</td><td class="spec-val">2.976 / 3.91 mm</td></tr>
+        <tr><td class="spec-key">Densidad</td><td class="spec-val">112.896 / 65.536 dots/m²</td></tr>
+        <tr><td class="spec-key">Brillo</td><td class="spec-val">≥ 4.000 nits</td></tr>
+        <tr><td class="spec-key">IP Rating</td><td class="spec-val">IP65</td></tr>
+        <tr><td class="spec-key">Gabinete</td><td class="spec-val">500 × 500 × 85 mm · 8 kg</td></tr>
+        <tr><td class="spec-key">Potencia máx.</td><td class="spec-val">750 W/m²</td></tr>
+        <tr><td class="spec-key">Ángulo visual</td><td class="spec-val">H140° / V140°</td></tr>
+      </table>
+      <a class="product-cta" href="https://wa.me/5491100000000?text=Consulta%20A2%20Curve" target="_blank">Consultar disponibilidad</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ A1 PLUS CURVE ══ -->
+<span id="a1-curve" class="product-anchor"></span>
+<div class="product">
+  <div class="product-hero" style="direction:rtl">
+    <div class="carousel-wrap" style="direction:ltr" data-ids='["1dC1q48YZTHHExGL0vpC_devlrK8G0JSq","1PD_wq5tRoSetru-R6zuua_qWD5w19end","1ztVScy4nwv0dNcfPRyZtnlcsDkmXPgyp","1OFHcWRVa6u6Y4ryAuzAGsDqFQ1z3vLZI","1Rz-P85iyulgmRtBW9XzxeDrxOE6H-cwy","1rYhOMyaE74bK3oUWwvsZMEfWOvlwVwSl","1GoucoaE85JJ0QoGD-pj5zhzXM0n6Nqme","1VLSPxu3yM2H9V0AiZ9dx7iL6uH_D4_yN","1ZvUjWdu5tuGBfKVsMxpZcgLZLhY4XOJ2","1x8LUibed9lmz8iQmfPUqdLvjpR4sUO7R","1Dh5xGPTcDiW7qZ6OHhW718ljKHs7jdyn","1hnEMmQylfsUllhncZ07LAf5fd2wLiLBr","1Wa0rPDNZaPdm54uandX8lDah5EYSXAzn","14S_jnlsoUAck8V7EALMkC0XbSnCzGO69"]'>
+    </div>
+    <div class="product-info" style="direction:ltr">
+      <span class="product-badge">Curve · 10° · Plataforma A1</span>
+      <h2 class="product-name">A1 Plus Curve</h2>
+      <p class="product-tagline">La versatilidad del Curve 10° con la plataforma A1 Plus Outdoor. 14 fotos de la colección completa. Compatible con estructuras estándar A1.</p>
+      <div class="spec-chips">
+        <span class="chip highlight">10° Curve A1</span>
+        <span class="chip">P2.97 – P3.91</span>
+        <span class="chip">≥4000 nits</span>
+        <span class="chip">IP65</span>
+      </div>
+      <table class="spec-table">
+        <tr><td class="spec-key">Configuración</td><td class="spec-val">Curve 10° · Plataforma A1</td></tr>
+        <tr><td class="spec-key">Pixel Pitch</td><td class="spec-val">2.976 / 3.91 mm</td></tr>
+        <tr><td class="spec-key">LED Lamp</td><td class="spec-val">SMD1415 / SMD1921</td></tr>
+        <tr><td class="spec-key">Densidad</td><td class="spec-val">112.896 / 65.536 dots/m²</td></tr>
+        <tr><td class="spec-key">Brillo</td><td class="spec-val">≥ 4.000 nits</td></tr>
+        <tr><td class="spec-key">IP Rating</td><td class="spec-val">IP65</td></tr>
+        <tr><td class="spec-key">Gabinete</td><td class="spec-val">500 × 500 × 85 mm · 8 kg</td></tr>
+        <tr><td class="spec-key">Potencia máx.</td><td class="spec-val">750 W/m²  (media: 450 W/m²)</td></tr>
+        <tr><td class="spec-key">Ángulo visual</td><td class="spec-val">H140° / V140°</td></tr>
+        <tr><td class="spec-key">Temperatura op.</td><td class="spec-val">-20 °C a +65 °C</td></tr>
+      </table>
+      <a class="product-cta" href="https://wa.me/5491100000000?text=Consulta%20A1%20Plus%20Curve" target="_blank">Consultar disponibilidad</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── COMPARE TABLE ─────────────────────────────────────────── -->
+<section id="compare">
+  <div class="section-header" style="background:var(--off); border-top:none;">
+    <h2>Comparar modelos</h2>
+    <p>Todas las especificaciones, una sola vista.</p>
+  </div>
+  <div class="compare-inner">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Uso</th>
+          <th>Pixel Pitch</th>
+          <th>Brillo</th>
+          <th>IP</th>
+          <th>Gabinete</th>
+          <th>Potencia máx.</th>
+          <th>Scan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A1 Plus Indoor</td>
+          <td><span class="badge-in">Indoor</span></td>
+          <td>1.56 / 1.95 / 2.60 / 2.97</td>
+          <td>≤800 nits</td>
+          <td>IP45</td>
+          <td>500×500×85 mm</td>
+          <td>600 W/m²</td>
+          <td>40/32/21 scan</td>
+        </tr>
+        <tr>
+          <td>A1 Plus Outdoor</td>
+          <td><span class="badge-out">Outdoor</span></td>
+          <td>2.60 / 2.97 / 3.91</td>
+          <td>≥4000 nits</td>
+          <td>IP65</td>
+          <td>500×500×85 mm</td>
+          <td>750 W/m²</td>
+          <td>32/21/16 scan</td>
+        </tr>
+        <tr>
+          <td>A2 Plus Outdoor</td>
+          <td><span class="badge-out">Outdoor</span></td>
+          <td>2.97 / 3.91</td>
+          <td>≥4000 nits</td>
+          <td>IP65</td>
+          <td>500×500×85 mm</td>
+          <td>750 W/m²</td>
+          <td>21/16 scan</td>
+        </tr>
+        <tr>
+          <td>A2 Flex 45°</td>
+          <td><span class="badge-out">Outdoor · Flex</span></td>
+          <td>2.97 / 3.91</td>
+          <td>≥4000 nits</td>
+          <td>IP65</td>
+          <td>500×500×85 mm</td>
+          <td>750 W/m²</td>
+          <td>21/16 scan</td>
+        </tr>
+        <tr>
+          <td>A2 Curve 10°</td>
+          <td><span class="badge-out">Outdoor · Curve</span></td>
+          <td>2.97 / 3.91</td>
+          <td>≥4000 nits</td>
+          <td>IP65</td>
+          <td>500×500×85 mm</td>
+          <td>750 W/m²</td>
+          <td>21/16 scan</td>
+        </tr>
+        <tr>
+          <td>A1 Plus Curve 10°</td>
+          <td><span class="badge-out">Outdoor · Curve</span></td>
+          <td>2.97 / 3.91</td>
+          <td>≥4000 nits</td>
+          <td>IP65</td>
+          <td>500×500×85 mm</td>
+          <td>750 W/m²</td>
+          <td>21/16 scan</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── CTA ──────────────────────────────────────────────────── -->
+<section id="cta">
+  <h2>¿Cuál pantalla<br>necesitás?</h2>
+  <p>Nuestro equipo técnico te ayuda a elegir el modelo correcto para tu evento o instalación.</p>
+  <div class="cta-btns">
+    <a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20cotizar%20pantallas%20LED" class="btn-white" target="_blank">WhatsApp</a>
+    <a href="mailto:contacto@lumia.ar" class="btn-ghost-w">contacto@lumia.ar</a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────── -->
+<footer>
+  <p>
+    <strong>LUMIA</strong> — una empresa de <strong>ISIMO Company</strong> · Alquiler profesional de pantallas LED<br>
+    Capital Federal + AMBA + hasta 5hs de viaje<br><br>
+    <a href="mailto:contacto@lumia.ar">contacto@lumia.ar</a> &nbsp;·&nbsp;
+    <a href="https://wa.me/5491100000000" target="_blank">WhatsApp</a><br><br>
+    © 2025 LUMIA. Especificaciones técnicas sujetas a cambios sin previo aviso.
+  </p>
+</footer>
+
+<!-- ─── SCRIPTS ───────────────────────────────────────────────── -->
+<script>
+// ── Build all carousels ──────────────────────────────────────
+document.querySelectorAll('.carousel-wrap').forEach(wrap => {
+  const ids = JSON.parse(wrap.dataset.ids || '[]');
+  if (!ids.length) return;
+
+  // Build markup
+  const track = document.createElement('div');
+  track.className = 'carousel-track';
+
+  ids.forEach(id => {
+    const slide = document.createElement('div');
+    slide.className = 'carousel-slide';
+    const img = document.createElement('img');
+    img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+    img.alt = 'Pantalla LED LUMIA';
+    img.loading = 'lazy';
+    slide.appendChild(img);
+    track.appendChild(slide);
+  });
+
+  // Count badge
+  const count = document.createElement('div');
+  count.className = 'carousel-count';
+  count.textContent = `1 / ${ids.length}`;
+
+  // Prev / Next buttons
+  const prev = document.createElement('button');
+  prev.className = 'carousel-btn prev';
+  prev.setAttribute('aria-label', 'Anterior');
+  prev.innerHTML = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 4 7 10 13 16"/></svg>`;
+
+  const next = document.createElement('button');
+  next.className = 'carousel-btn next';
+  next.setAttribute('aria-label', 'Siguiente');
+  next.innerHTML = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 4 13 10 7 16"/></svg>`;
+
+  // Thumb strip
+  const strip = document.createElement('div');
+  strip.className = 'thumb-strip';
+
+  const thumbEls = ids.map((id, i) => {
+    const th = document.createElement('div');
+    th.className = 'thumb' + (i === 0 ? ' active' : '');
+    const ti = document.createElement('img');
+    ti.src = `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+    ti.alt = '';
+    ti.loading = 'lazy';
+    th.appendChild(ti);
+    strip.appendChild(th);
+    return th;
+  });
+
+  wrap.appendChild(track);
+  wrap.appendChild(count);
+  wrap.appendChild(prev);
+  wrap.appendChild(next);
+  wrap.appendChild(strip);
+
+  let current = 0;
+
+  function go(n) {
+    current = (n + ids.length) % ids.length;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    count.textContent = `${current + 1} / ${ids.length}`;
+    thumbEls.forEach((t, i) => t.classList.toggle('active', i === current));
+    // scroll thumb into view
+    thumbEls[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
+  prev.addEventListener('click', () => go(current - 1));
+  next.addEventListener('click', () => go(current + 1));
+  thumbEls.forEach((th, i) => th.addEventListener('click', () => go(i)));
+
+  // Touch/swipe
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) go(dx < 0 ? current + 1 : current - 1);
+  });
+});
+
+// ── Active product nav ───────────────────────────────────────
+const pnavLinks = document.querySelectorAll('.pnav-link');
+const anchors = Array.from(document.querySelectorAll('.product-anchor')).map(a => ({
+  el: a,
+  id: a.id
+}));
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      pnavLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { rootMargin: '-48px 0px -60% 0px' });
+
+anchors.forEach(a => obs.observe(a.el));
+</script>
+</body>
+</html>
